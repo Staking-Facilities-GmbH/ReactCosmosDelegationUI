@@ -3,5 +3,9 @@ module.exports = {
   npm: {
     esModules: true,
     umd: false
+  },
+  devServer: {
+    https: true,
+    port: 6464
   }
 }
