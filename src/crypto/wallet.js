@@ -62,15 +62,6 @@ export function createSignedTx(tx, signature) {
     signatures: [signature]
   })
 }
-/**
-export function createBroadcastBody(signedTx) {
-  return JSON.stringify({
-    type: "auth/StdTx",
-    value: signedTx,
-    return: `block`
-  })
-}
-**/
 
 export function createBroadcastBody(signedTx) {
   return JSON.stringify({

@@ -28,7 +28,6 @@ class DelegateModal extends Component {
     super(props);
     this.state = { modalShow: false };
     console.log("Constructed")
-    //console.log("Initialized Ledger App", this.state.ledger)
     this.state = {
             bigValue: 3064,
         }
