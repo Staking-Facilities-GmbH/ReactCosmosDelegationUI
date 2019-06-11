@@ -18,6 +18,7 @@ const sliderStyle = {  // Give the slider some width
     position: 'relative',
     width: '100%',
     height: 80,
+    //border: '1px solid steelblue',
 }
 
 const railStyle = {
@@ -66,7 +67,7 @@ export function Handle({ // your handle component
 const HDPATH = [44, 118, 0, 0, 0];
 const TIMEOUT = 5000;
 
-class ReactLedgerComponent extends Component {
+class LedgerComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { ledger: null, version: null, address: null, addressOpen:false, sliderValues:[1]};
@@ -93,11 +94,11 @@ class ReactLedgerComponent extends Component {
     clearInterval(this.interval);
   }
 
-  onSliderChange(sliderValues) {
+  onSliderChange = sliderValues => {
     document.getElementById("input").value = sliderValues/1000000;
     this.setState({ sliderValues: sliderValues})
   }
-  onInputChange(inputValue) {
+  onInputChange = inputValue => {
     let lastChar = inputValue.target.value[inputValue.target.value.length -1];
     var converter = inputValue.target.value
       if(!isNaN(converter)){
@@ -108,7 +109,7 @@ class ReactLedgerComponent extends Component {
   }
 
 
-  async pollLedger() {
+  pollLedger = async () => {
 
 
     const communicationMethod = await ledger.comm_u2f.create_async(
@@ -223,6 +224,7 @@ class ReactLedgerComponent extends Component {
 
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
+    //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
     const response = await fetch('https://backend2.stakingfacilities.com:8443/public/injectTx', {
       method: 'POST',
       headers: {
@@ -248,7 +250,7 @@ class ReactLedgerComponent extends Component {
           <a data-tip data-for='cosmosApp'> "Cosmos" <img style={{fill: '#8c99ad'}} src={infoLogo} alt="Info Logo"/> </a>
           <ReactTooltip place="bottom" id='cosmosApp' type="dark">
             <span>
-            <ul className="list-unstyled"><li>1. Download the Ledger Live app.</li> <li>2. Connect your ledger via USB and update to the latest firmware</li> <li>3. Go to the ledger live app store, and download the "Cosmos" application (this can take a while).</li> <li><strong>Note: You may have to enable <code>Dev Mode</code> in the <code>Settings</code> of Ledger Live to be able to download the "Cosmos" application</strong></li> <li>4. Navigate to the Cosmos app on your ledger device</li></ul>
+            <ul class="list-unstyled"><li>1. Download the Ledger Live app.</li> <li>2. Connect your ledger via USB and update to the latest firmware</li> <li>3. Go to the ledger live app store, and download the "Cosmos" application (this can take a while).</li> <li><strong>Note: You may have to enable <code>Dev Mode</code> in the <code>Settings</code> of Ledger Live to be able to download the "Cosmos" application</strong></li> <li>4. Navigate to the Cosmos app on your ledger device</li></ul>
             </span>
           </ReactTooltip>
            application</div>
@@ -403,4 +405,4 @@ class ReactLedgerComponent extends Component {
   );
 }
 }
-export default ReactLedgerComponent;
+export default LedgerComponent;

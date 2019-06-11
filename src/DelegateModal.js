@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LedgerComponent from './ReactLedgerComponent.js';
+import LedgerComponent from './LedgerComponent.js';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
