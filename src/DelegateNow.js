@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DelegateModal from './DelegateModal';
 //import RedelegateModal from './RedelegateModal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-const DelegateNow = () => {
+class DelegateNow extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render(){
   return (
     <div className="show-stage_sub" id="delegatenow">
       <div className="container">
@@ -15,7 +19,7 @@ const DelegateNow = () => {
                 <Tab>Redelegate your rewards</Tab>
               </TabList>
               <TabPanel>
-                <DelegateModal/>
+                <DelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
               </TabPanel>
               <TabPanel>
                 <h2>Test</h2>
@@ -26,6 +30,7 @@ const DelegateNow = () => {
       </div>
     </div>
   )
+}
 }
 
 export default DelegateNow
