@@ -7,11 +7,11 @@ import * as crypto from './crypto/crypto.js';
 import * as wallet from './crypto/wallet.js';
 import { signatureImport } from "secp256k1";
 import ReactJson from 'react-json-view';
-import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider';
-import Loader from 'react-loader-spinner';
-import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent';
-import ReactTooltip from 'react-tooltip';
-import {InputGroup, FormControl} from 'react-bootstrap';
+import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider'
+import Loader from 'react-loader-spinner'
+import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent'
+import ReactTooltip from 'react-tooltip'
+import {InputGroup, FormControl} from 'react-bootstrap'
 import './css/subsitescustom.css'
 import './css/delegatemodal.css'
 
@@ -63,6 +63,8 @@ export function Handle({ // your handle component
         </div>
     )
 }
+
+
 
 const HDPATH = [44, 118, 0, 0, 0];
 const TIMEOUT = 5000;
@@ -148,7 +150,7 @@ class LedgerComponent extends Component {
 
   generateTx = async () => {
     const txMsg = {
-        msg: [{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:"cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p",value:{denom:"uatom",amount:String(this.state.sliderValues)}}}],
+        msg: [{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:"cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p",amount:{denom:"uatom",amount:String(this.state.sliderValues)}}}],
         fee: { amount: [{ denom: "uatom", amount: String(fee) }], gas: String(150000) },
         signatures: null,
         memo: "Powered by stakingfacilities.com"
@@ -157,7 +159,7 @@ class LedgerComponent extends Component {
             sequence: String(this.state.addressInfo.sequence),
             from: this.state.address,
             account_number: String(this.state.addressInfo.account_number),
-            chain_id: `cosmoshub-1`,
+            chain_id: `cosmoshub-2`,
             gas: String(200000),
             generate_only: false
           }
@@ -225,6 +227,7 @@ class LedgerComponent extends Component {
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
     //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
+      console.log("INJECT TX: ", this.state.txBody)
     const response = await fetch('https://backend2.stakingfacilities.com:8443/public/injectTx', {
       method: 'POST',
       headers: {
@@ -241,13 +244,12 @@ class LedgerComponent extends Component {
     <div className="row" ref={this.ledgerModal}>
       {this.state.version !== 36864 &&
         <div className="col-lg-12 text-center" style={{minHeight: "280px"}}>
-          <div className="padd-25">
+          <div className="centered padd-25">
           <h3>Create your transaction</h3>
-          <div className="centered">Connect your Ledger Nano S to the computer</div>
+          <div>Connect your Ledger Nano S to the computer</div>
           </div>
-          <div className="ledger">
-          <img style={{maxWidth:'50%', marginTop:'-16px'}} src={ledgerLogo} alt="ledger"/>
-          <div style={{marginTop:'16px'}}>Open the
+          <img className="ledger" style={{maxWidth:'50%', marginTop:'-16px'}} src={ledgerLogo} alt="ledger"/>
+          <div className="centered" style={{marginTop:'16px'}}>Open the
           <a data-tip data-for='cosmosApp'> "Cosmos" <img style={{fill: '#8c99ad'}} src={infoLogo} alt="Info Logo"/> </a>
           <ReactTooltip place="bottom" id='cosmosApp' type="dark">
             <span>
@@ -256,11 +258,10 @@ class LedgerComponent extends Component {
           </ReactTooltip>
            application</div>
         </div>
-        </div>
       }
       {this.state.version === 36864 && !this.state.addressOpen && !this.state.injected &&
       <div className="col-lg-12 text-center" style={{minHeight: "280px"}}>
-        <div className="padd-25">
+        <div className="centered padd-25">
         <h3 className="currentStepHeadline">One moment, please!</h3>
         <div className="padd-25">Querying your Cosmos account from the blockchain. This might take some time...</div>
         <Loader
@@ -272,8 +273,8 @@ class LedgerComponent extends Component {
         </div>
       }
       {this.state.addressOpen &&
-        <div className="col-lg-12 text-center w-100 currentStepHeadline">
-        <div className="padd-25">
+        <div className="col-lg-12 text-center w-100">
+        <div className="centered padd-25">
           <h3 className="currentStepHeadline">Create your transaction</h3>
           <p>Your address: <span className="cos-address">{this.state.address}</span></p>
           <p>Your account has <span className="cos-address purple">{(this.state.maxAtom + fee)/1000000} ATOM</span></p>
@@ -338,12 +339,12 @@ class LedgerComponent extends Component {
         {this.state.maxAtom > 0 &&
           <div>
         <div className="padd-25">Or just type it in:</div>
-<InputGroup style={{maxWidth:'42%', marginLeft:'auto', marginRight:'auto'}} className="mb-3">
-            <InputGroup.Prepend className="col-lg-1">
-              <InputGroup.Text className="col-sm-1 col-form-label" id="basic-addon1">ATOM</InputGroup.Text>
+<InputGroup style={{maxWidth:'42%', marginLeft:'auto', marginRight:'auto'}} className="mb-3 input-group">
+            <InputGroup.Prepend className="input-group-prepend">
+              <InputGroup.Text className="input-group-text" id="basic-addon1">ATOM</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-              class="col-lg-2"
+              className="form-control"
               placeholder="0"
               aria-label="ATOM"
               step="0.001"
@@ -352,6 +353,7 @@ class LedgerComponent extends Component {
               onChange={this.onInputChange}
             />
           </InputGroup>
+
         <div className="padd-bot-25">
         <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*Warning! This transaction will cost you 0.02 ATOM in fees.*</h6>
           <button className="btn btn-auth-login" onClick={() => this.generateTx()}>Generate & Sign Transaction</button>
