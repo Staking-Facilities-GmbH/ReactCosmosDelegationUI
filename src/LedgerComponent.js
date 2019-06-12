@@ -12,6 +12,8 @@ import Loader from 'react-loader-spinner';
 import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent';
 import ReactTooltip from 'react-tooltip';
 import {InputGroup, FormControl} from 'react-bootstrap';
+import './css/subsitescustom.css'
+import './css/delegatemodal.css'
 
 
 const sliderStyle = {  // Give the slider some width
@@ -241,17 +243,19 @@ class LedgerComponent extends Component {
         <div className="col-lg-12 text-center" style={{minHeight: "280px"}}>
           <div className="padd-25">
           <h3>Create your transaction</h3>
-          <div>Connect your Ledger Nano S to the computer</div>
+          <div className="centered">Connect your Ledger Nano S to the computer</div>
           </div>
+          <div className="ledger">
           <img style={{maxWidth:'50%', marginTop:'-16px'}} src={ledgerLogo} alt="ledger"/>
           <div style={{marginTop:'16px'}}>Open the
           <a data-tip data-for='cosmosApp'> "Cosmos" <img style={{fill: '#8c99ad'}} src={infoLogo} alt="Info Logo"/> </a>
           <ReactTooltip place="bottom" id='cosmosApp' type="dark">
             <span>
-            <ul class="list-unstyled"><li>1. Download the Ledger Live app.</li> <li>2. Connect your ledger via USB and update to the latest firmware</li> <li>3. Go to the ledger live app store, and download the "Cosmos" application (this can take a while).</li> <li><strong>Note: You may have to enable <code>Dev Mode</code> in the <code>Settings</code> of Ledger Live to be able to download the "Cosmos" application</strong></li> <li>4. Navigate to the Cosmos app on your ledger device</li></ul>
+            <ul className="list-unstyled"><li>1. Download the Ledger Live app.</li> <li>2. Connect your ledger via USB and update to the latest firmware</li> <li>3. Go to the ledger live app store, and download the "Cosmos" application (this can take a while).</li> <li><strong>Note: You may have to enable <code>Dev Mode</code> in the <code>Settings</code> of Ledger Live to be able to download the "Cosmos" application</strong></li> <li>4. Navigate to the Cosmos app on your ledger device</li></ul>
             </span>
           </ReactTooltip>
            application</div>
+        </div>
         </div>
       }
       {this.state.version === 36864 && !this.state.addressOpen && !this.state.injected &&
@@ -335,8 +339,8 @@ class LedgerComponent extends Component {
           <div>
         <div className="padd-25">Or just type it in:</div>
 <InputGroup style={{maxWidth:'42%', marginLeft:'auto', marginRight:'auto'}} className="mb-3">
-            <InputGroup.Prepend class="col-lg-1">
-              <InputGroup.Text class="col-sm-1 col-form-label" id="basic-addon1">ATOM</InputGroup.Text>
+            <InputGroup.Prepend className="col-lg-1">
+              <InputGroup.Text className="col-sm-1 col-form-label" id="basic-addon1">ATOM</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
               class="col-lg-2"
