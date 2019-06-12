@@ -55,16 +55,16 @@ class DelegateModal extends Component {
                        }
                     }.bind(this)}>
           <div>
-          <div className="padd-25">
+          <div className="noSelect padd-25">
             <h3>1. Connect your ledger</h3>
           </div>
             <img src={ledgerLogo} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
           <div>
-          <div className="padd-25">
+          <div className="noSelect padd-25">
             <h3 className="currentStepHeadline">2. Select the size of your delegation</h3>
           </div>
-            <AnimatedNumber className="animatedNumber" value={this.state.bigValue}
+            <AnimatedNumber className="centered" value={this.state.bigValue}
              style={{
                  transition: '0.8s ease-out',
                  fontSize: 48,
@@ -76,19 +76,19 @@ class DelegateModal extends Component {
            />
           </div>
           <div>
-          <div className="padd-25">
+          <div className="noSelect padd-25">
             <h3 className="currentStepHeadline">3. Verify & Sign the Transaction</h3>
             </div>
             <img src={signTx} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
           <div>
-          <div className="padd-25">
+          <div className="noSelect padd-25">
             <h3 className="currentStepHeadline">4. Wait for confirmation</h3>
             </div>
             <img src={final_del} style={{maxWidth:'50%',maxHeight:'200px', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
         </Slider>
-        <div className="padd-25 margin-top-25">
+        <div className="centered padd-25 margin-top-25">
                 <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>* Currently supported on Brave Browser, Chrome & Opera *</h6>
                 <button href="#" className="btn delegatenowbtn" onClick={() => this.openModal()} > Delegate now with your Ledger</button>
                 </div>
