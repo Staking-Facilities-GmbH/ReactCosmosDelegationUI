@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 import DelegateNow from './DelegateNow'
-import './css/delegatemodal.css';
-
 
 
 

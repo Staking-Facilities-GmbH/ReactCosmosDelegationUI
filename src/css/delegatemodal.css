@@ -4,6 +4,7 @@
 
 .currentStepHeadline {
     padding-bottom: 30px;
+    text-align: center !important;
 }
 
 .delSucessMsg {
@@ -24,7 +25,7 @@
 .react-tabs__tab {
     width: 40%;
     font-size: 1.2rem;
-    text-align: center;
+    text-align: center !important;
 }
 
 .react-tabs__tab--selected {
@@ -181,4 +182,11 @@
 
 .react-tabs__tab-panel--selected {
   display: block;
+}
+
+.animatedNumber {
+  padding-left: 40%;
+  padding-right: 40%;
+  width: 20%;
+  text-align: center !important;
 }

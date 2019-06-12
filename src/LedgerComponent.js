@@ -7,11 +7,11 @@ import * as crypto from './crypto/crypto.js';
 import * as wallet from './crypto/wallet.js';
 import { signatureImport } from "secp256k1";
 import ReactJson from 'react-json-view';
-import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider'
-import Loader from 'react-loader-spinner'
-import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent'
-import ReactTooltip from 'react-tooltip'
-import {InputGroup, FormControl} from 'react-bootstrap'
+import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider';
+import Loader from 'react-loader-spinner';
+import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent';
+import ReactTooltip from 'react-tooltip';
+import {InputGroup, FormControl} from 'react-bootstrap';
 
 
 const sliderStyle = {  // Give the slider some width
@@ -61,8 +61,6 @@ export function Handle({ // your handle component
         </div>
     )
 }
-
-
 
 const HDPATH = [44, 118, 0, 0, 0];
 const TIMEOUT = 5000;
@@ -270,7 +268,7 @@ class LedgerComponent extends Component {
         </div>
       }
       {this.state.addressOpen &&
-        <div className="col-lg-12 text-center w-100">
+        <div className="col-lg-12 text-center w-100 currentStepHeadline">
         <div className="padd-25">
           <h3 className="currentStepHeadline">Create your transaction</h3>
           <p>Your address: <span className="cos-address">{this.state.address}</span></p>

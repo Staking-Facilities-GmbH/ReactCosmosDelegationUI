@@ -8,6 +8,9 @@ import slider from './images/slider.png'
 import signTx from './images/signTxNew.gif'
 import ledgerLogo from './images/ledger.png';
 import AnimatedNumber from 'react-animated-number';
+import './css/delegatemodal.css';
+import './css/subsitescustom.css';
+
 
 const settings = {
       dots: true,
@@ -59,14 +62,14 @@ class DelegateModal extends Component {
           </div>
           <div>
           <div className="padd-25">
-            <h3>2. Select the size of your delegation</h3>
+            <h3 className="currentStepHeadline">2. Select the size of your delegation</h3>
           </div>
-            <AnimatedNumber value={this.state.bigValue}
+            <AnimatedNumber className="animatedNumber" value={this.state.bigValue}
              style={{
                  transition: '0.8s ease-out',
                  fontSize: 48,
                  transitionProperty:
-                     'background-color, color, opacity'
+                     'background-color, color, opacity',
              }}
              formatValue={n => `${n} ATOM`}
              duration={2000} stepPrecision={0}
@@ -74,13 +77,13 @@ class DelegateModal extends Component {
           </div>
           <div>
           <div className="padd-25">
-            <h3>3. Verify & Sign the Transaction</h3>
+            <h3 className="currentStepHeadline">3. Verify & Sign the Transaction</h3>
             </div>
             <img src={signTx} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
           <div>
           <div className="padd-25">
-            <h3>4. Wait for confirmation</h3>
+            <h3 className="currentStepHeadline">4. Wait for confirmation</h3>
             </div>
             <img src={final_del} style={{maxWidth:'50%',maxHeight:'200px', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
