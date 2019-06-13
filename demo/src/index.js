@@ -7,7 +7,7 @@ import '../../src/css/delegatemodal.css';
 class Demo extends Component {
   render() {
     return <div>
-      <CosmosLedgerUI validator_addr="cosmos123" api_url="google.com" fee={20000}/>
+      <CosmosLedgerUI validator_addr="cosmos123" api_url="https://backend2.stakingfacilities.com:8443" fee={20000}/>
     </div>
   }
 }

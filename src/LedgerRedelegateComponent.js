@@ -7,31 +7,12 @@ import * as crypto from './crypto/crypto.js';
 import * as wallet from './crypto/wallet.js';
 import { signatureImport } from "secp256k1";
 import ReactJson from 'react-json-view';
-import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider'
 import Loader from 'react-loader-spinner'
 import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent'
 import ReactTooltip from 'react-tooltip'
 import {InputGroup, FormControl} from 'react-bootstrap'
 import './css/subsitescustom.css'
 import './css/delegatemodal.css'
-
-
-const sliderStyle = {  // Give the slider some width
-    position: 'relative',
-    width: '100%',
-    height: 80,
-    //border: '1px solid steelblue',
-}
-
-const railStyle = {
-    position: 'absolute',
-    width: '100%',
-    height: 10,
-    marginTop: 35,
-    borderRadius: 5,
-    backgroundColor: '#8B9CB6',
-}
-
 
 export function Handle({ // your handle component
                            handle: { id, value, percent },
@@ -68,11 +49,11 @@ export function Handle({ // your handle component
 const HDPATH = [44, 118, 0, 0, 0];
 const TIMEOUT = 5000;
 
-class LedgerComponent extends Component {
+class LedgerRedelegateComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { ledger: null, version: null, address: null, addressOpen:false, sliderValues:[1]};
-    this.ledgerModal = React.createRef();
+    this.state = { ledger: null, version: null, address: null, addressOpen:false};
+    this.RedelegationLedgerModal = React.createRef();
   }
   componentDidMount() {
     console.warn("Initializing Ledger App...")
@@ -95,24 +76,7 @@ class LedgerComponent extends Component {
     clearInterval(this.interval);
   }
 
-  onSliderChange = sliderValues => {
-    document.getElementById("input").value = sliderValues/1000000;
-    this.setState({ sliderValues: sliderValues})
-  }
-  onInputChange = inputValue => {
-    let lastChar = inputValue.target.value[inputValue.target.value.length -1];
-    var converter = inputValue.target.value
-      if(!isNaN(converter)){
-        this.setState({ sliderValues: [converter*1000000]})
-      } else {
-        this.setState({ sliderValues: [0]})
-    }
-  }
-
-
   pollLedger = async () => {
-
-
     const communicationMethod = await ledger.comm_u2f.create_async(
           TIMEOUT,
           true
@@ -120,6 +84,7 @@ class LedgerComponent extends Component {
     const app = new ledger.App(communicationMethod)
     this.setState({ ledger: app });
   }
+
   signTx = async () => {
 
     var signMessage = wallet.createSignMessage(this.state.txMsg, this.state.requestMetaData)
@@ -127,13 +92,12 @@ class LedgerComponent extends Component {
       this.setState({errorMessage:'Waiting for Ledger input...'})
       const pubKeyBuffer = Buffer.from(this.state.cpk, `hex`)
       const ledgerSignature = (await this.state.ledger.sign(HDPATH, signMessage))
-      console.log("ledger signature code", ledgerSignature.return_code)
       if(ledgerSignature.return_code === 36864){
         const signatureByteArray = ledgerSignature.signature
         const signatureBuffer = signatureImport(signatureByteArray)
         const signature = wallet.createSignature(signatureBuffer,
-        this.state.addressInfo.sequence,
-        this.state.addressInfo.account_number,
+        5,
+        1003,
         pubKeyBuffer)
         const signedTx = wallet.createSignedTx(this.state.txMsg, signature)
         const body = wallet.createBroadcastBody(signedTx)
@@ -146,11 +110,10 @@ class LedgerComponent extends Component {
       console.error("sign error", message, statusCode)
     }
   }
-
   generateTx = async () => {
     const txMsg = {
-        msg: [{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:this.props.validator_addr,amount:{denom:"uatom",amount:String(this.state.sliderValues)}}}],
-        fee: { amount: [{ denom: "uatom", amount: String(this.props.fee) }], gas: String(150000) },
+        msg: [{"type":"cosmos-sdk/MsgWithdrawDelegationReward","value":{"delegator_address":this.state.address,"validator_address":this.props.validator_addr}},{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:"cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p",amount:{denom:"uatom",amount:String(this.state.rewards)}}}],
+        fee: { amount: [{ denom: "uatom", amount: String(this.props.fee) }], gas: String(200000) },
         signatures: null,
         memo: "Powered by stakingfacilities.com"
     }
@@ -197,7 +160,7 @@ class LedgerComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch(this.props.api_url + '/public/getAddress', {
+          const addressInfo = await fetch('https://backend2.stakingfacilities.com:8443/public/getAddress', {
             method: 'GET',
             headers: {
               'Accept': 'application/json',
@@ -213,7 +176,23 @@ class LedgerComponent extends Component {
             }
           }
 
-          this.setState({address: address, addressOpen:true, addressInfo: data.value, maxAtom: atom - this.props.fee})
+          const rewardsInfo = await fetch(this.props.api_url + '/public/getRewards', {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'address': address
+            }
+          })
+          const rewardData = await rewardsInfo.json()
+          let rewards
+          for (var i in rewardData) {
+            if (rewardData[i].denom === "uatom") {
+              rewards = [parseInt(rewardData[i].amount)]
+            }
+          }
+
+          this.setState({address: address, addressOpen:true, addressInfo: data.value, maxAtom: atom - this.props.fee, rewards:rewards})
         } catch ({ message, statusCode }) {
           console.error("pk error", message, statusCode)
         }
@@ -225,8 +204,7 @@ class LedgerComponent extends Component {
 
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
-    //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
-      console.log("INJECT TX: ", this.state.txBody)
+    //window.scrollTo(0, this.RedelegationLedgerModal.current.offsetTop - 100);
     const response = await fetch(this.props.api_url + '/public/injectTx', {
       method: 'POST',
       headers: {
@@ -240,7 +218,7 @@ class LedgerComponent extends Component {
   }
   render() {
     return(
-    <div className="row" ref={this.ledgerModal}>
+    <div className="row" ref={this.RedelegationLedgerModal}>
       {this.state.version !== 36864 &&
         <div className="col-lg-12 text-center" style={{minHeight: "280px"}}>
           <div className="centered padd-25">
@@ -261,104 +239,47 @@ class LedgerComponent extends Component {
       {this.state.version === 36864 && !this.state.addressOpen && !this.state.injected &&
       <div className="col-lg-12 text-center" style={{minHeight: "280px"}}>
         <div className="centered padd-25">
-        <h3 className="currentStepHeadline">One moment, please!</h3>
-        <div className="padd-25">Querying your Cosmos account from the blockchain. This might take some time...</div>
-        <Loader
-         type="Oval"
-         color="#8B9CB6"
-         height="32"
-         width="32"/>
+          <h3 className="currentStepHeadline">One moment, please!</h3>
+          <div className="padd-25">Querying your Cosmos account from the blockchain. This might take some time...</div>
+          <Loader
+           type="Oval"
+           color="#8B9CB6"
+           height="32"
+           width="32"/>
         </div>
         </div>
       }
       {this.state.addressOpen &&
         <div className="col-lg-12 text-center w-100">
-        <div className="centered padd-25">
+        <div className="padd-25">
           <h3 className="currentStepHeadline">Create your transaction</h3>
           <p>Your address: <span className="cos-address">{this.state.address}</span></p>
-          <p>Your account has <span className="cos-address purple">{(this.state.maxAtom + this.props.fee)/1000000} ATOM</span></p>
-          {this.state.maxAtom > 0 ?
-            <div>
-          <div className="padd-25" style={{marginTop:'-24px', fontWeight:'bold'}}>Important: We recommend keeping a small amount of ATOM unbonded for transaction fees (claim rewards/redelegate/unbond). Select the number of ATOM you want to delegate to Staking Facilities:</div>
 
-          <Slider
-                rootStyle={sliderStyle}
-                domain={[1, this.state.maxAtom]}
-                step={1}
-                mode={2}
-                values={this.state.sliderValues}
-                onChange={this.onSliderChange}
-            >
-            <Rail>
-              {({ getRailProps }) => (  // adding the rail props sets up events on the rail
-                <div style={railStyle} {...getRailProps()} />
-              )}
-            </Rail>
-            <Handles>
-              {({ handles, getHandleProps }) => (
-                <div className="slider-handles">
-                  {handles.map(handle => (
-                    <Handle
-                      key={handle.id}
-                      handle={handle}
-                      getHandleProps={getHandleProps}
-                    />
-                  ))}
-                </div>
-              )}
-            </Handles>
-            <Tracks right={false}>
-              {({ tracks, getTrackProps }) => (
-                <div className="slider-tracks">
-                  {tracks.map(({ id, source, target }) => (
-                    <Track
-                      key={id}
-                      source={source}
-                      target={target}
-                      getTrackProps={getTrackProps}
-                    />
-                  ))}
-                </div>
-              )}
-            </Tracks>
-             <Ticks count={12}>{({ ticks }) => (
-              <div className="slider-ticks">
-                {ticks.map(tick => (
-                  <Tick key={tick.id} tick={tick} count={ticks.length} />
-                ))}
-              </div>
-            )}</Ticks>
-          </Slider>
-          </div>
+          {this.state.rewards > 0 ?
+            <div>
+              <p>Your outstanding rewards: <span className="cos-address purple">{(this.state.rewards)/1000000} ATOM </span></p>
+            </div>
           :
-            <div className="padd-25">Sorry! This account doesn't have any ATOM.</div>
+            <div className="padd-25">This account doesn't have any outstanding rewards.</div>
           }
 
         </div>
         {this.state.maxAtom > 0 &&
+        <div>
+          <div className="padd-bot-25">
+            <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*This transaction will cost you 0.02 ATOM in fees.*</h6>
+            <button className="btn btn-auth-login" onClick={() => this.generateTx()}>Generate & Sign Redelegation Transaction</button>
+          </div>
+        </div>
+        }
+        {
+          this.state.maxAtom <= 0 || isNaN(this.state.maxAtom) &&
           <div>
-        <div className="padd-25">Or just type it in:</div>
-<InputGroup style={{maxWidth:'42%', marginLeft:'auto', marginRight:'auto'}} className="mb-3 input-group">
-            <InputGroup.Prepend className="input-group-prepend">
-              <InputGroup.Text className="input-group-text" id="basic-addon1">ATOM</InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              className="form-control"
-              placeholder="0"
-              aria-label="ATOM"
-              step="0.001"
-              aria-describedby="Define amount ATOM"
-              id="input"
-              onChange={this.onInputChange}
-            />
-          </InputGroup>
-
-        <div className="padd-bot-25">
-        <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*Warning! This transaction will cost you 0.02 ATOM in fees.*</h6>
-          <button className="btn btn-auth-login" onClick={() => this.generateTx()}>Generate & Sign Transaction</button>
-        </div>
-        </div>
-      }
+              <div className="padd-bot-25">
+                  <p style={{fontWeight:'bold'}}>Your account needs at least 0.02 ATOM to pay for the transaction fee. This is a common problem for everyone who delegated all ATOMs. Talk to us on <a href="https://t.me/stakingfacilities" target="_blank">Telegram.</a></p>
+              </div>
+          </div>
+        }
         </div>
       }
       {this.state.txMsg != null &&
@@ -389,8 +310,8 @@ class LedgerComponent extends Component {
         <div className="col-lg-12 text-center background" style={{minHeight: "280px"}}>
         {this.state.confirmed &&
         <div className="padd-25">
-        <h3 className="currentStepHeadline">Congratulations!</h3>
-        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to Staking Facilities!</div>
+        <h3>Congratulations!</h3>
+        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to Staking Facilities.</div>
         <img style={{maxWidth:'15%', marginTop:'8px'}} src={sfLogo} alt="Staking Facilities Logo"/>
         </div>}
         {this.state.waitConfirm &&
@@ -408,4 +329,4 @@ class LedgerComponent extends Component {
   );
 }
 }
-export default LedgerComponent;
+export default LedgerRedelegateComponent;

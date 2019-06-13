@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DelegateModal from './DelegateModal';
-//import RedelegateModal from './RedelegateModal';
+import RedelegateModal from './RedelegateModal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 class DelegateNow extends Component {
@@ -22,7 +22,7 @@ class DelegateNow extends Component {
                 <DelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
               </TabPanel>
               <TabPanel>
-                <h2>Test</h2>
+              <RedelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
               </TabPanel>
             </Tabs>
           </div>
