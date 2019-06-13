@@ -64,7 +64,7 @@ class RedelegateModal extends Component {
           <div className="noSelect padd-25">
             <h3>2. See your outstanding rewards</h3>
           </div>
-            <AnimatedNumber value={this.state.bigValue}
+            <AnimatedNumber className="centered" value={this.state.bigValue}
              style={{
                  transition: '0.8s ease-out',
                  fontSize: 48,
