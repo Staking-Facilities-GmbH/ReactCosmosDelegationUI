@@ -114,7 +114,7 @@ class LedgerRedelegateComponent extends Component {
   }
   generateTx = async () => {
     const txMsg = {
-        msg: [{"type":"cosmos-sdk/MsgWithdrawDelegationReward","value":{"delegator_address":this.state.address,"validator_address":this.props.validator_addr}},{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:"cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p",amount:{denom:"uatom",amount:String(this.state.rewards)}}}],
+        msg: [{"type":"cosmos-sdk/MsgWithdrawDelegationReward","value":{"delegator_address":this.state.address,"validator_address":this.props.validator_addr}},{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:this.props.validator_addr,amount:{denom:"uatom",amount:String(this.state.rewards)}}}],
         fee: { amount: [{ denom: "uatom", amount: String(this.props.fee) }], gas: String(200000) },
         signatures: null,
         memo: this.props.memo
