@@ -313,8 +313,8 @@ class LedgerRedelegateComponent extends Component {
         {this.state.confirmed &&
         <div className="padd-25">
         <h3>Congratulations!</h3>
-        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to Staking Facilities.</div>
-        <img style={{maxWidth:'15%', marginTop:'8px'}} src={sfLogo} alt="Staking Facilities Logo"/>
+        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to us.</div>
+        <img style={{maxWidth:'15%', marginTop:'8px'}} src={sfLogo} alt="Logo"/>
         </div>}
         {this.state.waitConfirm &&
         <div className="padd-25">
