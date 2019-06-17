@@ -13,6 +13,8 @@ import ReactTooltip from 'react-tooltip'
 import {InputGroup, FormControl} from 'react-bootstrap'
 import './css/subsitescustom.css'
 import './css/delegatemodal.css'
+import './css/bootstrap.min.css'
+
 
 export function Handle({ // your handle component
                            handle: { id, value, percent },
@@ -160,7 +162,7 @@ class LedgerRedelegateComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch('https://backend2.stakingfacilities.com:8443/public/getAddress', {
+          const addressInfo = await fetch(this.props.api_url + '/public/getAddress', {
             method: 'GET',
             headers: {
               'Accept': 'application/json',
@@ -267,7 +269,7 @@ class LedgerRedelegateComponent extends Component {
         {this.state.maxAtom > 0 &&
         <div>
           <div className="padd-bot-25">
-            <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*This transaction will cost you 0.02 ATOM in fees.*</h6>
+            <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*This transaction will cost you {this.props.fee / 1000000} ATOM in fees.*</h6>
             <button className="btn btn-auth-login" onClick={() => this.generateTx()}>Generate & Sign Redelegation Transaction</button>
           </div>
         </div>

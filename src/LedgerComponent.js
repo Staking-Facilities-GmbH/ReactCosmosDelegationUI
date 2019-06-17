@@ -12,7 +12,7 @@ import Loader from 'react-loader-spinner'
 import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent'
 import ReactTooltip from 'react-tooltip'
 import {InputGroup, FormControl} from 'react-bootstrap'
-import './css/subsitescustom.css'
+import './css/bootstrap.min.css'
 import './css/delegatemodal.css'
 
 
@@ -273,13 +273,13 @@ class LedgerComponent extends Component {
       }
       {this.state.addressOpen &&
         <div className="col-lg-12 text-center w-100">
+        <h3 className="currentStepHeadline">Create your transaction</h3>
         <div className="centered padd-25">
-          <h3 className="currentStepHeadline">Create your transaction</h3>
-          <p>Your address: <span className="cos-address">{this.state.address}</span></p>
-          <p>Your account has <span className="cos-address purple">{(this.state.maxAtom + this.props.fee)/1000000} ATOM</span></p>
+          <p className="">Your address: <br/><span className="cos-address">{this.state.address}</span></p>
+          <p className="">Your account has <br/><span className=" cos-address purple">{(this.state.maxAtom + this.props.fee)/1000000} ATOM</span></p>
           {this.state.maxAtom > 0 ?
             <div>
-          <div className="padd-25" style={{marginTop:'-24px', fontWeight:'bold'}}>Important: We recommend keeping a small amount of ATOM unbonded for transaction fees (claim rewards/redelegate/unbond). Select the number of ATOM you want to delegate to Staking Facilities:</div>
+          <div className="padd-25" style={{marginTop:'-24px', fontWeight:'bold', boxSizing: 'border-box'}}>Important: We recommend keeping a small amount of ATOM unbonded for transaction fees (claim rewards/redelegate/unbond). Select the number of ATOM you want to delegate to Staking Facilities:</div>
 
           <Slider
                 rootStyle={sliderStyle}
@@ -354,7 +354,7 @@ class LedgerComponent extends Component {
           </InputGroup>
 
         <div className="padd-bot-25">
-        <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*Warning! This transaction will cost you 0.02 ATOM in fees.*</h6>
+        <h6 style={{fontSize:10, marginTop:10, fontWeight:'bold'}}>*Warning! This transaction will cost you {this.props.fee / 1000000} ATOM in fees.*</h6>
           <button className="btn btn-auth-login" onClick={() => this.generateTx()}>Generate & Sign Transaction</button>
         </div>
         </div>

@@ -13,6 +13,7 @@ import './css/subsitescustom.css';
 
 
 const settings = {
+      arrows: false,
       dots: true,
       infinite: true,
       speed: 500,
