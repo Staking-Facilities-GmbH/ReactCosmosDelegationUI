@@ -45,7 +45,7 @@ class DelegateModal extends Component {
         return (
           <div className="w-100 padding-top-bot">
           {this.state.modalShow ? (
-            <LedgerComponent style={{padding:'50px'}} validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
+            <LedgerComponent style={{padding:'50px'}} validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID}/>
           ) : (
             <div className="col text-center spawn-modal background" style={{minHeight: "400px"}}>
             <Slider {...settings}       afterChange={ function (index) {
@@ -59,7 +59,7 @@ class DelegateModal extends Component {
           <div className="noSelect padd-25">
             <h3>1. Connect your ledger</h3>
           </div>
-            <img src={ledgerLogo} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
+            <img className="slider-image" src={ledgerLogo} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
           <div>
           <div className="noSelect padd-25">
@@ -80,7 +80,7 @@ class DelegateModal extends Component {
           <div className="noSelect padd-25">
             <h3 className="currentStepHeadline">3. Verify & Sign the Transaction</h3>
             </div>
-            <img src={signTx} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
+            <img className="slider-image" src={signTx} style={{maxWidth:'50%', marginTop:'-16px', marginLeft:'auto', marginRight:'auto'}}/>
           </div>
           <div>
           <div className="noSelect padd-25">

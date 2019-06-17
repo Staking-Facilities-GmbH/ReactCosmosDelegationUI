@@ -152,13 +152,13 @@ class LedgerComponent extends Component {
         msg: [{type:"cosmos-sdk/MsgDelegate",value:{delegator_address:this.state.address,validator_address:this.props.validator_addr,amount:{denom:"uatom",amount:String(this.state.sliderValues)}}}],
         fee: { amount: [{ denom: "uatom", amount: String(this.props.fee) }], gas: String(150000) },
         signatures: null,
-        memo: "Powered by stakingfacilities.com"
+        memo: this.props.memo
     }
     const requestMetaData = {
             sequence: String(this.state.addressInfo.sequence),
             from: this.state.address,
             account_number: String(this.state.addressInfo.account_number),
-            chain_id: `cosmoshub-2`,
+            chain_id: this.props.chainID,
             gas: String(200000),
             generate_only: false
           }

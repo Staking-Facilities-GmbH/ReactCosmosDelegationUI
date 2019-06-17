@@ -265,3 +265,11 @@
 .slick-list {
   min-height: 20rem;
 }
+
+.slider-image {
+      padding-top: 6rem;
+}
+
+.slider-number {
+      padding-top: 12rem;
+}

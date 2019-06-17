@@ -19,10 +19,10 @@ class DelegateNow extends Component {
                 <Tab>Redelegate your rewards</Tab>
               </TabList>
               <TabPanel>
-                <DelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
+                <DelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID}/>
               </TabPanel>
               <TabPanel>
-              <RedelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
+              <RedelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID}/>
               </TabPanel>
             </Tabs>
           </div>
