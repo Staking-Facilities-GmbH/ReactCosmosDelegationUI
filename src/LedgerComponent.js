@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ledgerLogo from './images/ledger.png';
-import cosmosLogo from './images/cosmnosLogo.png';
+import cosmosLogo from './images/cosmosLogo.png';
 import infoLogo from './images/info_black.png';
 import * as ledger from 'ledger-cosmos-js';
 import * as crypto from './crypto/crypto.js';

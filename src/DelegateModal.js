@@ -47,7 +47,7 @@ class DelegateModal extends Component {
           {this.state.modalShow ? (
             <LedgerComponent style={{padding:'50px'}} validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee}/>
           ) : (
-            <div className="col text-center spawn-modal background" style={{minHeight: "280px"}}>
+            <div className="col text-center spawn-modal background" style={{minHeight: "400px"}}>
             <Slider {...settings}       afterChange={ function (index) {
                        if(index === 1) {
                          this.setState({

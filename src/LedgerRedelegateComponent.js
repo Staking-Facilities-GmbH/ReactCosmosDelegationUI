@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ledgerLogo from './images/ledger.png';
-import sfLogo from './images/logo_black.png';
+import cosmosLogo from './images/cosmosLogo.png';
 import infoLogo from './images/info_black.png';
 import * as ledger from 'ledger-cosmos-js';
 import * as crypto from './crypto/crypto.js';
@@ -314,7 +314,7 @@ class LedgerRedelegateComponent extends Component {
         <div className="padd-25">
         <h3>Congratulations!</h3>
         <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to us.</div>
-        <img style={{maxWidth:'15%', marginTop:'8px'}} src={sfLogo} alt="Logo"/>
+        <img style={{maxWidth:'15%', marginTop:'8px'}} src={cosmosLogo} alt="Logo"/>
         </div>}
         {this.state.waitConfirm &&
         <div className="padd-25">
