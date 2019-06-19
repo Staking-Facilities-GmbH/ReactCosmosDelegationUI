@@ -31,6 +31,8 @@ TBD
 
 # Installation & Setup
 
+Please note that the Ledger Nano S requires HTTPS to function with your browser. If your website does not support HTTPS, you will not be able to use this tool. The backend is used to serve HTTPS content from an RPC to the component.
+
 ```
 npm i react-cosmos-delegation
 ```
@@ -44,3 +46,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 
 
 ```
+
+# TODO
+Backend explanation
+
