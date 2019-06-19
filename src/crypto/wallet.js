@@ -66,7 +66,7 @@ export function createSignedTx(tx, signature) {
 export function createBroadcastBody(signedTx) {
   return JSON.stringify({
     tx: signedTx,
-    mode: `async`
+    mode: `sync`
   })
 }
 
