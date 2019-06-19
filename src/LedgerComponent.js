@@ -390,7 +390,7 @@ class LedgerComponent extends Component {
         {this.state.confirmed &&
         <div className="padd-25">
         <h3 className="currentStepHeadline">Congratulations!</h3>
-        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to us!</div>
+        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to {this.props.validator_name}.</div>
         <img style={{maxWidth:'15%', marginTop:'8px'}} src={cosmosLogo} alt="Logo"/>
         </div>}
         {this.state.waitConfirm &&

@@ -278,7 +278,7 @@ class LedgerRedelegateComponent extends Component {
           this.state.maxAtom <= 0 || isNaN(this.state.maxAtom) &&
           <div>
               <div className="padd-bot-25">
-                  <p style={{fontWeight:'bold'}}>Your account needs at least 0.02 ATOM to pay for the transaction fee. This is a common problem for everyone who delegated all ATOMs. Talk to us on <a href="https://t.me/stakingfacilities" target="_blank">Telegram.</a></p>
+                  <p style={{fontWeight:'bold'}}>Your account needs at least {this.props.fee / 1000000} ATOM to pay for the transaction fee. This is a common problem for everyone who delegated all ATOMs.</p>
               </div>
           </div>
         }
@@ -313,7 +313,7 @@ class LedgerRedelegateComponent extends Component {
         {this.state.confirmed &&
         <div className="padd-25">
         <h3>Congratulations!</h3>
-        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to us.</div>
+        <div className="padd-25 delSucessMsg"><a href={'https://www.mintscan.io/txs/' + this.state.confirmedTx.txhash} target="_blank">Transaction confirmed!</a> Thank you for delegating to {this.props.validator_name}.</div>
         <img style={{maxWidth:'15%', marginTop:'8px'}} src={cosmosLogo} alt="Logo"/>
         </div>}
         {this.state.waitConfirm &&
