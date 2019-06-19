@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DelegateModal from './DelegateModal';
 import RedelegateModal from './RedelegateModal';
+import WithdrawModal from './WithdrawModal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 
@@ -28,7 +29,7 @@ class DelegateNow extends Component {
               <RedelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
               </TabPanel>}
               {this.props.withdraw && <TabPanel>
-              <h3>Test</h3>
+                <WithdrawModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
               </TabPanel>}
             </Tabs>
           </div>

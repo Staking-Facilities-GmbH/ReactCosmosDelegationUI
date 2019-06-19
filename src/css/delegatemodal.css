@@ -62,6 +62,14 @@
     background-image: linear-gradient(to right,#315285 0,#315285 0,#477E99 0,#477E99 45%,#558AAD 66%,#558AAD 100%)
 }
 
+.withdrawnowbtn {
+    padding: 15px;
+    color: whitesmoke;
+    border: 1px;
+    box-shadow: 0 3px 0 0 #003d35;
+    background-image: linear-gradient(to right,#C32F27 0,#C32F27 0,#F93B3B 0,#F93B3B 45%,#FA5E5E 66%,#FA5E5E 100%)
+}
+
 .delegatenowbtn:active, .delegatenowbtn.active {
 
     box-shadow: none;
