@@ -51,7 +51,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 ```
 
 #### Parameters
-```
+```JS
 validator_name="Staking Facilities" //Validator name displayed
 validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" //Address of your validator
 api_url="https://backend2.stakingfacilities.com:8443" //Backend to query information && inject transactions
