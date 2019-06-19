@@ -22,12 +22,14 @@ Delegating to smaller validators helps Cosmos to stay decentralized. In order to
 * On Website Delegation using Ledger Nano S
 * Customizable Parameters like TxFee, TxMemo or ChainID
 * Redelegation (`cosmos-sdk/MsgWithdrawDelegationReward` and `cosmos-sdk/MsgDelegate` in one transaction)
+* Withdraw Rewards
+* Decide if you want to enable redelegate and/or withdraw tab
+
 
 TBD
 ------
 
 * Clean up Code
-* Add Withdraw Rewards Tab
 
 # Installation & Setup
 
