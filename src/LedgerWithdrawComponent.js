@@ -5,6 +5,7 @@ import infoLogo from './images/info_black.png';
 import * as ledger from 'ledger-cosmos-js';
 import * as crypto from './crypto/crypto.js';
 import * as wallet from './crypto/wallet.js';
+import * as lcd from './lcd/lcd.js';
 import { signatureImport } from "secp256k1";
 import ReactJson from 'react-json-view';
 import Loader from 'react-loader-spinner'
@@ -127,12 +128,7 @@ class LedgerWithdrawComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch(this.props.api_url + '/auth/accounts/' + address, {
-            method: 'GET',
-            headers: {
-               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-          })
+          const addressInfo = await lcd.getAddressInfo(this.props.api_url, address)
           const data = await addressInfo.json()
           let atom
           for (var i in data.value.coins) {
@@ -141,12 +137,7 @@ class LedgerWithdrawComponent extends Component {
             }
           }
 
-          const rewardsInfo = await fetch(this.props.api_url + "/distribution/delegators/" + address + "/rewards/" + this.props.validator_addr, {
-            method: 'GET',
-            headers: {
-               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-          })
+          const rewardsInfo = await lcd.getRewardsInfo(this.props.api_url, address, this.props.validator_addr)
           const rewardData = await rewardsInfo.json()
           let rewards
           for (var i in rewardData) {
@@ -168,15 +159,8 @@ class LedgerWithdrawComponent extends Component {
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
     //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
-      console.log("INJECT TX: ", this.state.txBody)
-    const response = await fetch(this.props.api_url + '/txs', {
-      method: 'POST',
-      headers: {
-         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: this.state.txBody,
-      json: true
-    })
+    console.log("INJECT TX: ", this.state.txBody)
+    const response = await lcd.injectTx(this.props.api_url, this.state.txBody)
     const data = await response.json()
     this.setState({confirmed: true, waitConfirm: false, confirmedTx: data})
   }

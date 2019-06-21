@@ -5,16 +5,16 @@ import infoLogo from './images/info_black.png';
 import * as ledger from 'ledger-cosmos-js';
 import * as crypto from './crypto/crypto.js';
 import * as wallet from './crypto/wallet.js';
+import * as lcd from './lcd/lcd.js';
 import { signatureImport } from "secp256k1";
 import ReactJson from 'react-json-view';
-import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider'
-import Loader from 'react-loader-spinner'
-import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent'
-import ReactTooltip from 'react-tooltip'
-import {InputGroup, FormControl} from 'react-bootstrap'
-import './css/bootstrap.min.css'
-import './css/delegatemodal.css'
-
+import { Slider, Handles, Tracks, Rail, Ticks } from 'react-compound-slider';
+import Loader from 'react-loader-spinner';
+import { SliderRail, KeyboardHandle, Track, Tick} from './slider/SliderComponent';
+import ReactTooltip from 'react-tooltip';
+import {InputGroup, FormControl} from 'react-bootstrap';
+import './css/bootstrap.min.css';
+import './css/delegatemodal.css';
 
 const sliderStyle = {  // Give the slider some width
     position: 'relative',
@@ -197,12 +197,7 @@ class LedgerDelegateComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch(this.props.api_url + '/auth/accounts/' + address, {
-            method: 'GET',
-            headers: {
-               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-          })
+          const addressInfo = await lcd.getAddressInfo(this.props.api_url, address)
           const data = await addressInfo.json()
           let atom
           for (var i in data.value.coins) {
@@ -224,15 +219,8 @@ class LedgerDelegateComponent extends Component {
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
     //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
-      console.log("INJECT TX: ", this.state.txBody)
-    const response = await fetch(this.props.api_url + '/txs', {
-      method: 'POST',
-      headers: {
-         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: this.state.txBody,
-      json: true
-    })
+    console.log("INJECT TX: ", this.state.txBody)
+    const response = await lcd.injectTx(this.props.api_url, this.state.txBody)
     const data = await response.json()
     this.setState({confirmed: true, waitConfirm: false, confirmedTx: data})
   }
