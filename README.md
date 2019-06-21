@@ -44,7 +44,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 
 ...
 
-<CosmosLedgerUI validator_name="Staking Facilities" validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" api_url="https://backend2.stakingfacilities.com:8443" fee={1} memo="Powered by OpenSource" chainID="cosmoshub-2" delegate={true} redelegate={true} withdraw={true} />
+<CosmosLedgerUI validator_name="Staking Facilities" validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" lcd="https://backend2.stakingfacilities.com:8443" fee={1} memo="Powered by OpenSource" chainID="cosmoshub-2" delegate={true} redelegate={true} withdraw={true} />
 
 
 
@@ -54,7 +54,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 ```JS
 validator_name="Staking Facilities" //Validator name displayed
 validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" //Address of your validator
-api_url="https://backend2.stakingfacilities.com:8443" //Backend to query information && inject transactions
+lcd="https://backend2.stakingfacilities.com:8443" //Backend to query information && inject transactions
 fee={1} //Transaction fee in uatom
 memo="Powered by OpenSource" //Memo field of transaction
 chainID="cosmoshub-2" //ChainID you want to inject to

@@ -23,13 +23,13 @@ class DelegateNow extends Component {
                 {this.props.withdraw && <Tab>Withdraw Rewards</Tab>}
               </TabList>
               {this.props.delegate && <TabPanel>
-                <DelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
+                <DelegateModal validator_addr={this.props.validator_addr} lcd={this.props.lcd} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
               </TabPanel>}
               {this.props.redelegate && <TabPanel>
-              <RedelegateModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
+              <RedelegateModal validator_addr={this.props.validator_addr} lcd={this.props.lcd} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
               </TabPanel>}
               {this.props.withdraw && <TabPanel>
-                <WithdrawModal validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
+                <WithdrawModal validator_addr={this.props.validator_addr} lcd={this.props.lcd} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
               </TabPanel>}
             </Tabs>
           </div>

@@ -163,7 +163,7 @@ class LedgerRedelegateComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await lcd.getAddressInfo(this.props.api_url, address)
+          const addressInfo = await lcd.getAddressInfo(this.props.lcd, address)
           const data = await addressInfo.json()
           let atom
           for (var i in data.value.coins) {
@@ -171,7 +171,7 @@ class LedgerRedelegateComponent extends Component {
               atom = [parseInt(data.value.coins[i].amount)]
             }
           }
-          const rewardsInfo = await lcd.getRewardsInfo(this.props.api_url, address, this.props.validator_addr)
+          const rewardsInfo = await lcd.getRewardsInfo(this.props.lcd, address, this.props.validator_addr)
           const rewardData = await rewardsInfo.json()
           let rewards
           for (var i in rewardData) {
@@ -194,7 +194,7 @@ class LedgerRedelegateComponent extends Component {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
     //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
     console.log("INJECT TX: ", this.state.txBody)
-    const response = await lcd.injectTx(this.props.api_url, this.state.txBody)
+    const response = await lcd.injectTx(this.props.lcd, this.state.txBody)
     const data = await response.json()
     this.setState({confirmed: true, waitConfirm: false, confirmedTx: data})
   }
