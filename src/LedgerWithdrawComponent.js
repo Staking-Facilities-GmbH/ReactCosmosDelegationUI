@@ -127,12 +127,10 @@ class LedgerWithdrawComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch(this.props.api_url + '/public/getAddress', {
+          const addressInfo = await fetch(this.props.api_url + '/auth/accounts/' + address, {
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'address': address
+               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
             }
           })
           const data = await addressInfo.json()
@@ -143,12 +141,10 @@ class LedgerWithdrawComponent extends Component {
             }
           }
 
-          const rewardsInfo = await fetch(this.props.api_url + '/public/getRewards', {
+          const rewardsInfo = await fetch(this.props.api_url + "/distribution/delegators/" + address + "/rewards/" + this.props.validator_addr, {
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'address': address
+               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
             }
           })
           const rewardData = await rewardsInfo.json()
@@ -171,14 +167,15 @@ class LedgerWithdrawComponent extends Component {
 
   injectTx = async () => {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
-    //window.scrollTo(0, this.RedelegationLedgerModal.current.offsetTop - 100);
-    const response = await fetch(this.props.api_url + '/public/injectTx', {
+    //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
+      console.log("INJECT TX: ", this.state.txBody)
+    const response = await fetch(this.props.api_url + '/txs', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       },
       body: this.state.txBody,
+      json: true
     })
     const data = await response.json()
     this.setState({confirmed: true, waitConfirm: false, confirmedTx: data})

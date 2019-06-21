@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LedgerComponent from './LedgerComponent.js';
+import LedgerDelegateComponent from './LedgerDelegateComponent.js';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -45,7 +45,7 @@ class DelegateModal extends Component {
         return (
           <div className="w-100 padding-top-bot">
           {this.state.modalShow ? (
-            <LedgerComponent style={{padding:'50px'}} validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
+            <LedgerDelegateComponent style={{padding:'50px'}} validator_addr={this.props.validator_addr} api_url={this.props.api_url} fee={this.props.fee} memo={this.props.memo} chainID={this.props.chainID} validator_name={this.props.validator_name}/>
           ) : (
             <div className="col text-center spawn-modal background" style={{minHeight: "400px"}}>
             <Slider {...settings}       afterChange={ function (index) {

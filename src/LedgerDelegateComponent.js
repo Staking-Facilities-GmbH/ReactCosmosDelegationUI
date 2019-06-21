@@ -68,7 +68,7 @@ export function Handle({ // your handle component
 const HDPATH = [44, 118, 0, 0, 0];
 const TIMEOUT = 5000;
 
-class LedgerComponent extends Component {
+class LedgerDelegateComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { ledger: null, version: null, address: null, addressOpen:false, sliderValues:[1]};
@@ -197,12 +197,10 @@ class LedgerComponent extends Component {
             this.setState({pk: pk, cpk: cpk})
           }
           const address = crypto.getAddressFromPublicKey(pk)
-          const addressInfo = await fetch(this.props.api_url + '/public/getAddress', {
+          const addressInfo = await fetch(this.props.api_url + '/auth/accounts/' + address, {
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'address': address
+               'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
             }
           })
           const data = await addressInfo.json()
@@ -227,13 +225,13 @@ class LedgerComponent extends Component {
     this.setState({txMsg: null, addressOpen: false, injected: true, confirmed: false, waitConfirm: true})
     //window.scrollTo(0, this.ledgerModal.current.offsetTop - 100);
       console.log("INJECT TX: ", this.state.txBody)
-    const response = await fetch(this.props.api_url + '/public/injectTx', {
+    const response = await fetch(this.props.api_url + '/txs', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       },
       body: this.state.txBody,
+      json: true
     })
     const data = await response.json()
     this.setState({confirmed: true, waitConfirm: false, confirmedTx: data})
@@ -408,4 +406,4 @@ class LedgerComponent extends Component {
   );
 }
 }
-export default LedgerComponent;
+export default LedgerDelegateComponent;
