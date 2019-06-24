@@ -27,7 +27,7 @@ Delegating to smaller validators helps Cosmos to stay decentralized. In order to
 TBD
 ------
 
-* Clean up Code
+* Clean up Code (it really needs it)
 
 # Installation & Setup
 
@@ -56,8 +56,8 @@ lcd="https://lcd.nylira.net" //LCD (HTTPS enabled) to query information && injec
 fee={1} //Transaction fee in uatom
 memo="Powered by OpenSource" //Memo field of transaction
 chainID="cosmoshub-2" //ChainID you want to inject to
-delegate={true} //Display delegation tab
-redelegate={true} //Display redelegation tab (`cosmos-sdk/MsgWithdrawDelegationReward` and `cosmos-sdk/MsgDelegate` in one transaction)
-withdraw={true} //Display withdraw rewards tab
+delegate={true} //Enable delegation tab
+redelegate={true} //Enable redelegation tab (`cosmos-sdk/MsgWithdrawDelegationReward` and `cosmos-sdk/MsgDelegate` in one transaction)
+withdraw={true} //Enable withdraw rewards tab
 
 ```
