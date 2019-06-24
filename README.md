@@ -1,8 +1,6 @@
 # react-cosmos-delegation-ui
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+[![npm version](https://badge.fury.io/js/react-cosmos-delegation.svg)](https://badge.fury.io/js/react-cosmos-delegation)
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
@@ -23,7 +21,7 @@ Delegating to smaller validators helps Cosmos to stay decentralized. In order to
 * Customizable Parameters like TxFee, TxMemo or ChainID
 * Redelegation (`cosmos-sdk/MsgWithdrawDelegationReward` and `cosmos-sdk/MsgDelegate` in one transaction)
 * Withdraw Rewards
-* Decide if you want to enable redelegate and/or withdraw tab
+* Decide which functions you want to enable
 
 
 TBD
@@ -33,7 +31,7 @@ TBD
 
 # Installation & Setup
 
-Please note that the Ledger Nano S requires HTTPS to function with your browser. If your website does not support HTTPS, you will not be able to use this tool. The LCD to connect to is also required to have HTTPS enabled.
+Please note that the Ledger Nano S requires HTTPS to function with your browser. If your website does not support HTTPS, you will not be able to use this tool. The LCD to connect to is also required to have HTTPS enabled. A big thanks to [Peng Zhong / nylira.net](https://twitter.com/zcpeng) to provide a public HTTPS enabled LCD! (You should still use your own if you have one)
 
 ```
 npm i react-cosmos-delegation
@@ -44,7 +42,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 
 ...
 
-<CosmosLedgerUI validator_name="Staking Facilities" validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" lcd="https://backend2.stakingfacilities.com:8443" fee={1} memo="Powered by OpenSource" chainID="cosmoshub-2" delegate={true} redelegate={true} withdraw={true} />
+<CosmosLedgerUI validator_name="Staking Facilities" validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" lcd="https://lcd.nylira.net" fee={1} memo="Powered by OpenSource" chainID="cosmoshub-2" delegate={true} redelegate={true} withdraw={true} />
 
 
 
@@ -54,7 +52,7 @@ import CosmosLedgerUI from 'react-cosmos-delegation';
 ```JS
 validator_name="Staking Facilities" //Validator name displayed
 validator_addr="cosmosvaloper1x88j7vp2xnw3zec8ur3g4waxycyz7m0mahdv3p" //Address of your validator
-lcd="https://backend2.stakingfacilities.com:8443" //Backend to query information && inject transactions
+lcd="https://lcd.nylira.net" //LCD (HTTPS enabled) to query information && inject transactions
 fee={1} //Transaction fee in uatom
 memo="Powered by OpenSource" //Memo field of transaction
 chainID="cosmoshub-2" //ChainID you want to inject to
@@ -63,7 +61,3 @@ redelegate={true} //Display redelegation tab (`cosmos-sdk/MsgWithdrawDelegationR
 withdraw={true} //Display withdraw rewards tab
 
 ```
-
-
-# TODO
-Backend explanation
