@@ -33,7 +33,7 @@ TBD
 
 # Installation & Setup
 
-Please note that the Ledger Nano S requires HTTPS to function with your browser. If your website does not support HTTPS, you will not be able to use this tool. The backend is used to serve HTTPS content from an RPC to the component.
+Please note that the Ledger Nano S requires HTTPS to function with your browser. If your website does not support HTTPS, you will not be able to use this tool. The LCD to connect to is also required to have HTTPS enabled.
 
 ```
 npm i react-cosmos-delegation
@@ -67,4 +67,3 @@ withdraw={true} //Display withdraw rewards tab
 
 # TODO
 Backend explanation
-
