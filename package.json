@@ -27,7 +27,7 @@
     "elliptic": "^6.5.0",
     "inferno": "^5.6.1",
     "jquery": "^3.4.1",
-    "ledger-cosmos-js": "^2.0.2",
+    "ledger-cosmos-js": "git+https://github.com/cosmos/ledger-cosmos-js.git",
     "lodash": "^4.17.11",
     "react-animated-number": "^0.4.4",
     "react-bootstrap": "^1.0.0-beta.9",
